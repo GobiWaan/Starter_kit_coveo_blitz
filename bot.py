@@ -1,5 +1,5 @@
 from game_message import Tick, Action, Spawn, Sail, Dock, Anchor, directions
-import math
+import math, random
 # Tick has form :
 # {
 #   currentTick: number;
@@ -14,6 +14,10 @@ import math
 #           // ...;
 #         ], 
 #       tideLevels: {min: int, max: int} 
+#       }
+#       tideSchedule: [5,4,3,3,4,5,6], // List of numbers representing the tide schedule
+#       // ...
+#       }
 #       ports: 
 #         [
 #           { row: 15, column: 7 },
@@ -30,6 +34,8 @@ import math
 class Bot:
     def __init__(self):
         print("Initializing your super mega duper bot")
+        # for now, the bot starts at any port location
+        self.position = random.choice(Tick.map.port)
         # find nearest dock - > choose fastest route {predict tide movement -> }-> start moving 
     def _distance_between_two_position(first: tuple, second: tuple) -> float:
         #pythagorea's theorem
