@@ -43,6 +43,17 @@ class Bot:
 
     def _find_nearest_dock(tick: Tick) -> directions:
         pass
+    def static_low_tide_map(tick: Tick):
+        hard_map = tick.map.topology.copy()
+        low = tick.map.tideLevels.min
+        for rows in hard_map:
+            for tile in rows:
+                if tile < low:
+                    tile = 0
+                else:
+                    tile = 1
+        return hard_map
+        
     def get_next_move(self, tick: Tick) -> Action:
         """
         Here is where the magic happens, for now the move is random. I bet you can do better ;)
