@@ -1,5 +1,26 @@
 from game_message import Tick, Action, Spawn, Sail, Dock, Anchor, directions
 
+# Tick has form :
+# {
+#   currentTick: number;
+#   totalTicks: number;
+#   currentLocation: Position | null;
+#   spawnLocation: Position | null;
+#   map: {
+#     topology: number[][];
+#     tideLevels: {
+#       max: number;
+#       min: number;
+#     },
+#     ports: Position[];
+#   };
+#   visitedPortIndices: number[];
+#   tideSchedule: number[];
+#   isOver: boolean;
+# }
+
+
+
 class Bot:
     def __init__(self):
         print("Initializing your super mega duper bot")
