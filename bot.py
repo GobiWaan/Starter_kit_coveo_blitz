@@ -33,6 +33,8 @@ class Bot:
     def __init__(self):
         print("Initializing your super mega duper bot")
         # find nearest dock - > choose fastest route {predict tide movement -> }-> start moving 
+    def _distance_between_two_position(self, other):
+        pass
     def _find_nearest_dock(tick: Tick) -> directions:
         pass
     def get_next_move(self, tick: Tick) -> Action:
