@@ -7,20 +7,18 @@ from game_message import Tick, Action, Spawn, Sail, Dock, Anchor, directions
 #   currentLocation: Position | null;
 #   spawnLocation: Position | null;
 #   map: {
-#     topology: [ // Matrix of tiles, representing terrain height
-    #   [8,8,7,6,5,5,5],
-    #   [8,8,6,5,4,4,3]
-    #   // ...;
-    #  ], 
-    # tideLevels: {min: int, max: int} 
-#
-#       max: number;
-#       min: number;
-#     },
-#   ports: [
-#      { row: 15, column: 7 },
-#      { row: 8, column: 8 },
-#     ],;
+#       topology: 
+#         [ // Matrix of tiles, representing terrain height
+#           [8,8,7,6,5,5,5],
+#           [8,8,6,5,4,4,3]
+#           // ...;
+#         ], 
+#       tideLevels: {min: int, max: int} 
+#       ports: 
+#         [
+#           { row: 15, column: 7 },
+#           { row: 8, column: 8 },
+#         ],;
 #   };
 #   visitedPortIndices: number[];
 #   tideSchedule: number[];
