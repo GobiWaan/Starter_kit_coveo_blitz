@@ -1,1 +1,3 @@
-https://link.springer.com/article/10.1007/s42113-022-00155-0
+https://link.springer.com/article/10.1007/s42113-022-00155-0 : Etude sur le Traveling Salesman Problem avec obstacles
+
+
