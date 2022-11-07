@@ -37,7 +37,7 @@ class Bot:
 
     def _find_nearest_dock(tick: Tick) -> directions:
         pass
-    def static_low_tide_map(tick: Tick):
+    def static_low_tide_map(tick: Tick) -> list[list[int]]:
         hard_map = tick.map.topology.copy()
         low = tick.map.tideLevels.min
         for rows in hard_map:
