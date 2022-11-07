@@ -28,7 +28,9 @@ import math, random
 #   tideSchedule: number[];
 #   isOver: boolean;
 # }
-
+def dist(self, first: tuple, second: tuple) -> float:
+    # pythagorea's theorem
+    return math.sqrt((abs(first[0] - second[0]))**2 + (abs(first[1] - second[1]))**2)
 
 
 class Bot:
@@ -37,12 +39,16 @@ class Bot:
         # for now, the bot starts at any port location
         self.position = random.choice(Tick.map.port)
         # find nearest dock - > choose fastest route {predict tide movement -> }-> start moving 
-    def _distance_between_two_position(first: tuple, second: tuple) -> float:
-        #pythagorea's theorem
+    def _distance_between_two_position(self, first: tuple, second: tuple) -> float:
+        # pythagorea's theorem
         return math.sqrt((abs(first[0] - second[0]))**2 + (abs(first[1] - second[1]))**2)
 
-    def _find_nearest_dock(tick: Tick) -> directions:
-        pass
+    def _find_nearest_dock(tick: Tick) -> int:
+        ports = tick.map.ports.copy()
+        map(dist, ports)
+        return ports.index(min(ports))
+
+
     def static_low_tide_map(tick: Tick):
         hard_map = tick.map.topology.copy()
         low = tick.map.tideLevels.min
@@ -60,5 +66,5 @@ class Bot:
         """
         if tick.currentLocation is None:
             return Spawn(tick.map.ports[0])
-        
+
         return Sail(directions[tick.currentTick % len(directions)])
