@@ -41,11 +41,17 @@ class Bot:
         # find nearest dock - > choose fastest route {predict tide movement -> }-> start moving 
 
     def find_nearest_dock(tick: Tick) -> int:
+        # returns the index of the closest dock in tick.map.ports
         ports = tick.map.ports.copy()
         visited = tick.visitedPortIndices.copy()
-        ports = [i for i in ports if i not in visited]
-        map(dist, ports)
-        return ports.index(min(ports))
+        dico = {}
+        for i, port in enumerate(ports):
+            dico[f"{dist(port)}"] = (i,port)
+        minimum = min(dist(port) for port in ports if port not in visited)
+        for key, values in dico.items:
+            if values[1] not in visited and minimum == float(key):
+                return values[0]
+
 
 
     def static_low_tide_map(tick: Tick):
