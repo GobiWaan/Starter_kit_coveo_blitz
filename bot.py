@@ -39,12 +39,11 @@ class Bot:
         # for now, the bot starts at any port location
         self.position = random.choice(Tick.map.port)
         # find nearest dock - > choose fastest route {predict tide movement -> }-> start moving 
-    def _distance_between_two_position(self, first: tuple, second: tuple) -> float:
-        # pythagorea's theorem
-        return math.sqrt((abs(first[0] - second[0]))**2 + (abs(first[1] - second[1]))**2)
 
-    def _find_nearest_dock(tick: Tick) -> int:
+    def find_nearest_dock(tick: Tick) -> int:
         ports = tick.map.ports.copy()
+        visited = tick.visitedPortIndices.copy()
+        ports = [i for i in ports if i not in visited]
         map(dist, ports)
         return ports.index(min(ports))
 
