@@ -34,10 +34,9 @@ def dist(first: tuple, second: tuple) -> float:
 
 
 class Bot:
-    def __init__(self, tick: Tick):
+    def __init__(self,):
         print("Initializing your super mega duper bot")
         # for now, the bot starts at any port location
-        self.position = random.choice(tick.map.port)
         # find nearest dock - > choose fastest route {predict tide movement -> }-> start moving 
 
     def find_nearest_dock(self, tick: Tick) -> int:
