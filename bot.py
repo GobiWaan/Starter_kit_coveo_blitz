@@ -70,16 +70,9 @@ class Bot:
                 res = key
         return res
 
-    def static_low_tide_map(tick: Tick):
-        hard_map = tick.map.topology.copy()
+    def static_low_tide_map(self, tick: Tick):
         low = tick.map.tideLevels.min
-        for rows in hard_map:
-            for tile in rows:
-                if tile < low:
-                    tile = 0
-                else:
-                    tile = 1
-        return hard_map
+        return [[int(low < j) for j in i] for i in tick.map.topology]
         
     def get_next_move(self, tick: Tick) -> Action:
         """
