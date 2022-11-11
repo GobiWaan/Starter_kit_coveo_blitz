@@ -72,7 +72,26 @@ class Bot:
 
     def static_low_tide_map(self, tick: Tick):
         low = tick.map.tideLevels.min
-        return [[int(low < j) for j in i] for i in tick.map.topology]
+        return [[int(j < low) for j in i] for i in tick.map.topology]
+    
+    def dynamic_sailable_map(self, tick: Tick, turn_in_future): 
+        # Return Binary Map of Sailable Water from Tide Schedule for set turn
+        #(1 : sailable) (0 : ground)
+
+        tide = tick.tideSchedule[turn_in_future % len(tick.tideSchedule)]
+        return [[int(j < tide) for j in i] for i in tick.map.topology]
+    
+
+    def next_position(self, current_position, direction):
+
+        cap = {"N":(0,1), "NE":(1,1), "E":(1,0), "SE":(1,-1), "S":(0,-1), "SW":(-1,-1), "W":(-1, 0), "NW":(-1, 1)}
+        new_row = current_position["row"] + cap[direction][1]
+        new_column = current_position["column"] + cap[direction][0]
+        return {"row": new_row, "column": new_column}
+
+    def is_sailable(self, tick: Tick, position, tide) -> bool:
+        return tick.map.topology[position['row']][position['column']] < tide
+
         
     def get_next_move(self, tick: Tick) -> Action:
         """
