@@ -92,6 +92,15 @@ class Bot:
     def is_sailable(self, tick: Tick, position, tide) -> bool:
         return tick.map.topology[position['row']][position['column']] < tide
 
+    def get_path_to_port(self, grid, position, port_position):
+        path = AStar.find_shortest_path(grid, position, port_position)
+        return path
+
+    def get_paths_for_all_ports(self, tick: Tick):
+        grid = self.dynamic_sailable_map(tick, 0)
+        paths = [self.get_path_to_port(grid, (tick.currentLocation.row, tick.currentLocation.column), (p.row, p.column)) for p in tick.map.ports]
+
+        return path
         
     def get_next_move(self, tick: Tick) -> Action:
         """
