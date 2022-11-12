@@ -30,7 +30,7 @@ import math, random
 # }
 def dist(first: tuple, second: tuple) -> float:
     # pythagorea's theorem
-    return math.sqrt((abs(first[0] - second[0]))**2 + (abs(first[1] - second[1]))**2)
+    return math.sqrt((first[0] - second[0])**2 + (first[1] - second[1])**2)
 
 
 class Bot:
