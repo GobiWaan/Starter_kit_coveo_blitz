@@ -99,6 +99,6 @@ class Bot:
         """
         if tick.currentLocation is None:
             return Spawn(tick.map.ports[0])
-        elif (tick.currentLocation in tick.map.ports) and (tick.map.port.index(tick.currentLocation) not in tick.visitedPortIndices):
+        elif (tick.currentLocation in tick.map.ports) and (tick.map.ports.index(tick.currentLocation) not in tick.visitedPortIndices):
             return Dock()
         return Sail(directions[tick.currentTick % len(directions)])
