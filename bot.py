@@ -1,5 +1,7 @@
 from game_message import Tick, Action, Spawn, Sail, Dock, Anchor, directions
 import math, random
+from christofides import tsp
+from pathfinding import AStar
 # Tick has form :
 # {
 #   currentTick: number;
@@ -34,8 +36,9 @@ def dist(first: tuple, second: tuple) -> float:
 
 
 class Bot:
-    def __init__(self,):
+    def __init__(self, tick : Tick):
         print("Initializing your super mega duper bot")
+        self.tsp_ports_order = tsp(tick.map.ports)
         # for now, the bot starts at any port location
         # find nearest dock - > choose fastest route {predict tide movement -> }-> start moving 
 
@@ -100,7 +103,7 @@ class Bot:
         grid = self.dynamic_sailable_map(tick, 0)
         paths = [self.get_path_to_port(grid, (tick.currentLocation.row, tick.currentLocation.column), (p.row, p.column)) for p in tick.map.ports]
 
-        return path
+        return paths
         
     def get_next_move(self, tick: Tick) -> Action:
         """

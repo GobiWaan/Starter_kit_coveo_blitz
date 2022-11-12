@@ -1,5 +1,14 @@
 #GobiWaan's version of https://github.com/Retsediv/ChristofidesAlgorithm by Retsediv
 
+# J'ai modifié le code source, voici comment on utilise le programme chritofides.py
+
+# from christofides import tsp
+
+# tsp(tick.map.ports)
+
+# retourne une boucle optimisé de ports sous forme [[x1, y1], [x2, y2]...]
+# L'indice des ports correspond à l'ordre dans lequel on devrait visiter les ports selon l'algorythm de Christophides ([0] = spawning point)
+
 def tsp(data):
     
     
