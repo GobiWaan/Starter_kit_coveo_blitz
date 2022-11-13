@@ -39,6 +39,7 @@ class Bot:
     def __init__(self, tick : Tick):
         print("Initializing your super mega duper bot")
         self.tsp_ports_order = tsp(tick.map.ports)
+        
         # for now, the bot starts at any port location
         # find nearest dock - > choose fastest route {predict tide movement -> }-> start moving 
 
@@ -110,7 +111,7 @@ class Bot:
         Here is where the magic happens, for now the move is random. I bet you can do better ;)
         """
         if tick.currentLocation is None:
-            return Spawn(tick.map.ports[0])
+            return Spawn(self.tsp_ports_order[0])
         elif (tick.currentLocation in tick.map.ports) and (tick.map.ports.index(tick.currentLocation) not in tick.visitedPortIndices):
             return Dock()
         return Sail(directions[tick.currentTick % len(directions)])
