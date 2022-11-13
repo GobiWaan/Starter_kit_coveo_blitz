@@ -55,7 +55,7 @@ def tsp(data):
 def christoPreparation(data_entree):
     data_sortie = []
     for position in data_entree:
-        data_sortie.append([position["row"], position["column"]])
+        data_sortie.append([position.row, position.column])
     
     return data_sortie
 
