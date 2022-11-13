@@ -61,6 +61,9 @@ class AStar:
         # La destination est dans un 'mur'
         if not grid[destination[0]][destination[1]]:
             raise Exception('La destination est dans un "mur"')
+        
+        if not grid[starting_point[0]][starting_point[1]]:
+            raise Exception("La position actuelle est dans un 'mur'")
 
         # Init starting point node
         cell_data_and_parents[starting_point[0]][starting_point[1]] = CellData(g=0.0, h=0.0, parent=starting_point)
@@ -105,4 +108,8 @@ class AStar:
     @classmethod
     def find_shortest_path(cls, grid: List[List[bool]], starting_point: Tuple[int, int], destination: Tuple[int, int]) -> List[Tuple[int, int]]:
         cell_data_and_parents = cls.fill_cell_data(grid, starting_point, destination)
+        
+        # Des fois, le pathfinding ne semble pas trouver la destination, donc on retourne une liste vide
+        if cell_data_and_parents is None:
+            return []
         return cls.get_path_from_cell_data(cell_data_and_parents, starting_point, destination) 
