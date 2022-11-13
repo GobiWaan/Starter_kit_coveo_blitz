@@ -53,24 +53,26 @@ class AStar:
         return path[::-1]
 
     @classmethod
-    def find_shortest_path(cls, grid: List[List[bool]], starting_point: Tuple[int, int], destination: Tuple[int, int]) -> List[Tuple[int, int]]:
+    def fill_cell_data(cls, grid, starting_point, destination):
         closed_list = cls.init_closed_list()
         cell_data_and_parents = cls.init_cell_data_and_parents()
         open_list = []
 
         # La destination est dans un 'mur'
         if not grid[destination[0]][destination[1]]:
-            return []
+            raise Exception('La destination est dans un "mur"')
 
         # Init starting point node
         cell_data_and_parents[starting_point[0]][starting_point[1]] = CellData(g=0.0, h=0.0, parent=starting_point)
 
         open_list.append(starting_point)
 
-        found_destination = False
-        while open_list and not found_destination:
+        while open_list:
 
-            i, j = open_list.pop()
+            # pop value with smallest f
+            i, j = min(open_list, key=lambda x: cell_data_and_parents[x[0]][x[1]].f)
+            open_list.remove((i, j))
+           
             closed_list[i][j] = True
 
             for di in range(-1, 2):
@@ -85,11 +87,11 @@ class AStar:
 
                     if (di+i, dj+j) == destination:
                         cell_data_and_parents[di+i][dj+j].parent = (i, j)
-                        found_destination = True
+                        return cell_data_and_parents 
 
                     elif not closed_list[di+i][j+dj] and grid[di+i][dj+j]:
                         new_g = cell_data_and_parents[i][j].g + (di**2 + dj**2)**0.5
-                        new_h = cls.compute_h((i, j), destination)
+                        new_h = cls.compute_h((di+i, dj+j), destination)
                         
                         if cell_data_and_parents[di+i][dj+j].f > (new_g + new_h):
                             cell_data_and_parents[di+i][dj+j] = CellData(
@@ -99,5 +101,8 @@ class AStar:
                             )
 
                             open_list.append((di+i, dj+j))
-        
+
+    @classmethod
+    def find_shortest_path(cls, grid: List[List[bool]], starting_point: Tuple[int, int], destination: Tuple[int, int]) -> List[Tuple[int, int]]:
+        cell_data_and_parents = cls.fill_cell_data(grid, starting_point, destination)
         return cls.get_path_from_cell_data(cell_data_and_parents, starting_point, destination) 
