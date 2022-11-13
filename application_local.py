@@ -83,6 +83,9 @@ class Game:
 
             return True
         elif action.kind == 'dock':
+            # Si on re-dock au spawn, la partie se termine
+            if self.ship_position == self.ship_spawn_location and self.ports.index({'row': self.ship_spawn_location.row, 'column': self.ship_spawn_location.column}) in self.visited_ports:
+                return False
             self.visited_ports.append(self.ports.index({'row': self.ship_position.row, 'column': self.ship_position.column}))
             return True
         elif action.kind == 'anchor':
