@@ -1,5 +1,5 @@
 #GobiWaan's version of https://github.com/Retsediv/ChristofidesAlgorithm by Retsediv
-
+from game_message import Position
 # J'ai modifié le code source, voici comment on utilise le programme chritofides.py
 
 # from christofides import tsp
@@ -55,7 +55,7 @@ def tsp(data):
 def christoPreparation(data_entree):
     data_sortie = []
     for position in data_entree:
-        data_sortie.append([position["row"], position["column"]])
+        data_sortie.append([Position.row , Position.column])
     
     return data_sortie
 

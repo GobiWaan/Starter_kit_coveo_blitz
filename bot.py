@@ -36,9 +36,8 @@ def dist(first: tuple, second: tuple) -> float:
 
 
 class Bot:
-    def __init__(self, tick : Tick):
-        print("Initializing your super mega duper bot")
-        self.tsp_ports_order = tsp(tick.map.ports)
+    def __init__(self):
+        print("Initializing your super mega duper bot") 
         
         # for now, the bot starts at any port location
         # find nearest dock - > choose fastest route {predict tide movement -> }-> start moving 
@@ -110,8 +109,17 @@ class Bot:
         """
         Here is where the magic happens, for now the move is random. I bet you can do better ;)
         """
+        #Spawning and Docking Logic
+        
         if tick.currentLocation is None:
+            self.tsp_ports_order = tsp(tick.map.ports)
             return Spawn(self.tsp_ports_order[0])
         elif (tick.currentLocation in tick.map.ports) and (tick.map.ports.index(tick.currentLocation) not in tick.visitedPortIndices):
+            del self.tsp_ports_order[0]
             return Dock()
+        
+        
+        #A* algo from current position to next_port_index
+        
+        # Convertion    
         return Sail(directions[tick.currentTick % len(directions)])
