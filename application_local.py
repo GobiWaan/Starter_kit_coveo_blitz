@@ -85,6 +85,8 @@ class Game:
         elif action.kind == 'dock':
             self.visited_ports.append(self.ports.index({'row': self.ship_position.row, 'column': self.ship_position.column}))
             return True
+        elif action.kind == 'anchor':
+            return True
         else:
             return False
 
