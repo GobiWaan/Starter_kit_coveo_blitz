@@ -34,11 +34,11 @@ def dist(first: tuple, second: tuple) -> float:
     # pythagorea's theorem
     return math.sqrt((first[0] - second[0])**2 + (first[1] - second[1])**2)
 
+direction_indices = {'N': (-1, 0), 'NE': (-1, 1), 'E': (0, 1), 'SE': (1, 1), 'S': (1, 0), 'SW': (1, -1), 'W': (0, -1), 'NW': (-1, -1), (-1, 0): 'N', (-1, 1): 'NE', (0, 1): 'E', (1, 1): 'SE', (1, 0): 'S', (1, -1): 'SW', (0, -1): 'W', (-1, -1): 'NW'}
 
 class Bot:
-    def __init__(self, tick : Tick):
+    def __init__(self):
         print("Initializing your super mega duper bot")
-        self.tsp_ports_order = tsp(tick.map.ports)
         # for now, the bot starts at any port location
         # find nearest dock - > choose fastest route {predict tide movement -> }-> start moving 
 
@@ -101,7 +101,7 @@ class Bot:
 
     def get_paths_for_all_ports(self, tick: Tick):
         grid = self.dynamic_sailable_map(tick, 0)
-        paths = [self.get_path_to_port(grid, (tick.currentLocation.row, tick.currentLocation.column), (p.row, p.column)) for p in tick.map.ports]
+        paths = [self.get_path_to_port(grid, (tick.currentLocation.row, tick.currentLocation.column), (p.row, p.column)) for p in tick.map.ports if grid[p.row][p.column] and tick.map.ports.index(p) not in tick.visitedPortIndices]
 
         return paths
         
@@ -113,4 +113,21 @@ class Bot:
             return Spawn(tick.map.ports[0])
         elif (tick.currentLocation in tick.map.ports) and (tick.map.ports.index(tick.currentLocation) not in tick.visitedPortIndices):
             return Dock()
-        return Sail(directions[tick.currentTick % len(directions)])
+        elif not self.dynamic_sailable_map(tick, 0)[tick.currentLocation.row][tick.currentLocation.column]: # On est pogné sur terre
+            return Anchor()
+
+
+        try:
+            shortest = min(filter(bool, self.get_paths_for_all_ports(tick)), key=lambda x: len(x))
+            direction = shortest[1][0] - shortest[0][0], shortest[1][1] - shortest[0][1]
+        except ValueError:
+            grid = self.dynamic_sailable_map(tick, 0)
+            spawn_location = tick.spawnLocation.row, tick.spawnLocation.column
+            if grid[spawn_location[0]][spawn_location[1]]:
+                path_to_spawn = self.get_path_to_port(grid, (tick.currentLocation.row, tick.currentLocation.column), (tick.spawnLocation.row, tick.spawnLocation.column))
+                if len(path_to_spawn) == 1:
+                    return Dock()
+                direction = path_to_spawn[1][0] - path_to_spawn[0][0], path_to_spawn[1][1] - path_to_spawn[0][1]
+            else:
+                return Anchor()
+        return Sail(direction_indices[direction])
