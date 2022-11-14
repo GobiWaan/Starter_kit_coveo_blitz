@@ -127,6 +127,8 @@ class Bot:
                 path_to_spawn = self.get_path_to_port(grid, (tick.currentLocation.row, tick.currentLocation.column), (tick.spawnLocation.row, tick.spawnLocation.column))
                 if len(path_to_spawn) == 1:
                     return Dock()
+                elif not path_to_spawn:
+                    return Anchor()
                 direction = path_to_spawn[1][0] - path_to_spawn[0][0], path_to_spawn[1][1] - path_to_spawn[0][1]
             else:
                 return Anchor()

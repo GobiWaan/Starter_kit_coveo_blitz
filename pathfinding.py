@@ -13,8 +13,8 @@ class CellData:
         return self.g + self.h
 
 class AStar:
-    ROWS = 40
-    COLS = 40
+    ROWS = 60
+    COLS = 60
 
     @classmethod
     def init_closed_list(cls):
